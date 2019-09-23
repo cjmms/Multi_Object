@@ -12,55 +12,57 @@
 void init() {
     glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
+    glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+
 	GLfloat white[] = { 1.0, 1.0, 1.0, 1.0 };
 	GLfloat light_pos[] = { 5, 5, 5, 1 };
 
 	glLightfv(GL_LIGHT0, GL_POSITION, light_pos);  // define the position of the light
 	glLightfv(GL_LIGHT0, GL_AMBIENT, white);  // specify the ambient RGBA intensity of the light
 	glEnable(GL_LIGHT0);
+}
 
+// x axis is red, y axis is green, z axis is blue
+void drawThreeAxises () {
+    double length = 0.15f;
+    glBegin(GL_LINES);
+    glColor3f(1.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(length, 0.0, 0.0);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glColor3f(0.0, 1.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, length, 0.0);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glColor3f(0.0, 0.0, 1.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, length);
+    glEnd();
+}
+
+void drawTeapot(double x, double y, double z) {
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    //glColor3f(1.0, 0.0, 0.0);
+    glutSolidTeapot(.08);  // draw the teapot
+    drawThreeAxises();
+    glPopMatrix();
 }
 
 void draw_eight_objs() {
-    glPushMatrix();
-    glTranslatef(-0.3f, 0.3f, -0.3f);
-    glutSolidTeapot(.1);  // draw the teapot
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0.3f, 0.3f, -0.3f);
-    glutSolidTeapot(.1);  // draw the teapot
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(-0.3f, -0.3f, -0.3f);
-    glutSolidTeapot(.1);  // draw the teapot
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0.3f, -0.3f, -0.3f);
-    glutSolidTeapot(.1);  // draw the teapot
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(-0.3f, 0.3f, 0.3f);
-    glutSolidTeapot(.1);  // draw the teapot
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0.3f, 0.3f, 0.3f);
-    glutSolidTeapot(.1);  // draw the teapot
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(-0.3f, -0.3f, 0.3f);
-    glutSolidTeapot(.1);  // draw the teapot
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0.3f, -0.3f, 0.3f);
-    glutSolidTeapot(.1);  // draw the teapot
-    glPopMatrix();
+    drawTeapot(-0.3f, 0.3f, -0.3f);
+    drawTeapot(0.3f, 0.3f, -0.3f);
+    drawTeapot(-0.3f, -0.3f, -0.3f);
+    drawTeapot(0.3f, -0.3f, -0.3f);
+    drawTeapot(-0.3f, 0.3f, 0.3f);
+    drawTeapot(0.3f, 0.3f, 0.3f);
+    drawTeapot(-0.3f, -0.3f, 0.3f);
+    drawTeapot(0.3f, -0.3f, 0.3f);
 }
 
 void draw() {
@@ -77,6 +79,8 @@ void draw() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);  // define a viewing matrix
+
+    gluSphere(gluNewQuadric(), 0.07f, 32, 32);
 
     draw_eight_objs();
 
