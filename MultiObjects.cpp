@@ -10,7 +10,6 @@
 #include <stdlib.h>
 
 
-GLfloat** material;
 
 void init() {
     glEnable(GL_DEPTH_TEST);
@@ -19,15 +18,13 @@ void init() {
 	// glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     // glEnable(GL_COLOR_MATERIAL);
 
-	GLfloat white[] = { 0.2, 0.2, 0.2, 1.0 };
-	GLfloat light_pos[] = { 5, 5, 5, 1 };
+	// GLfloat white[] = { 0.2, 0.2, 0.2, 1.0 };
+	// GLfloat light_pos[] = { 5, 5, 5, 1 };
 
 	//glLightfv(GL_LIGHT0, GL_POSITION, light_pos);  // define the position of the light
 	//glLightfv(GL_LIGHT0, GL_AMBIENT, white);  // specify the ambient RGBA intensity of the light
 	//glLightfv(GL_LIGHT0, GL_DIFFUSE, white);  // specify the ambient RGBA intensity of the light
 	//glEnable(GL_LIGHT0);
-
-    glShadeModel(GL_SMOOTH);
 
     glViewport(0, 0, 480, 480);  // define a viewport and display in this viewport
 	glMatrixMode(GL_PROJECTION);
@@ -63,7 +60,6 @@ void drawThreeAxises () {
 void drawTeapot(double x, double y, double z) {
     glPushMatrix();
     glTranslatef(x, y, z);
-    //glEnable(GL_COLOR_MATERIAL);
     glColor3f(0.85, 0.48, 0.47);
     glutSolidTeapot(.08);  // draw the teapot
     drawThreeAxises();
